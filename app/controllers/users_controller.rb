@@ -14,6 +14,21 @@ class UsersController <  ApplicationController
     end
    end
 
+   def edit
+    @user = User.find(params[:id])
+   end
+
+   def update
+    @user = User.find(params[:id])
+    if @user.update(whitlist_params)
+        flash[:notice] = "Your Account Information Were Successfully Updated"
+        redirect_to articles_path
+    else
+        render 'edit'
+    end
+   end
+
+
    private
 
    def whitlist_params
