@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
   end
 
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: 5)
   end
 
   def new
@@ -16,7 +16,7 @@ class ArticlesController < ApplicationController
   end
   
   def create
-    @article = Article.new(whitlist_params)
+    @article = Article.new(whitelist_params)
     @article.user = User.first
     if @article.save
       flash[:notice] = "Article Was Created Successfully"
