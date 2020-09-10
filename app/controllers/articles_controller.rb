@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article.update(whitlist_params)
+    if @article.update(whitelist_params)
       flash[:notice] = "Article Updated Successfully"
       redirect_to @article
     else
@@ -46,7 +46,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
-  def whitlist_params
+  def whitelist_params
     params.require(:article).permit(:title, :description)
   end
 end

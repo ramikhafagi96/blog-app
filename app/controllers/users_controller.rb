@@ -24,9 +24,9 @@ class UsersController <  ApplicationController
 
    def update
     @user = User.find(params[:id])
-    if @user.update(whitlist_params)
+    if @user.update(whitelist_params)
         flash[:notice] = "Your Account Information Were Successfully Updated"
-        redirect_to articles_path
+        redirect_to @user #user_path(@user)
     else
         render 'edit'
     end
@@ -40,7 +40,7 @@ class UsersController <  ApplicationController
 
    private
 
-   def whitlist_params
+   def whitelist_params
     params.require(:user).permit(:username, :email, :password)
    end
 end
