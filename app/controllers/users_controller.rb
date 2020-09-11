@@ -1,10 +1,12 @@
 class UsersController <  ApplicationController
-    before_action :set_user, only: [:show, :edit, :update]
+    before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :require_user, only: [:edit, :update]
-    before_action :is_authorized, only: [:edit, :update]
+    before_action :is_authorized, only: [:edit, :update, :destory]
+
    def index
     @users = User.paginate(page: params[:page], per_page: 5)
    end
+
    def new
     @user = User.new
    end
@@ -18,6 +20,13 @@ class UsersController <  ApplicationController
     else
       render 'new'
     end
+   end
+
+   def destroy
+     @user.destroy
+     session[:user_id] = nil
+     flash[:notice] = "Account and all associated articles are deleted"
+     redirect_to articles_path
    end
 
    def edit
@@ -35,6 +44,7 @@ class UsersController <  ApplicationController
    def show
     @articles = @user.articles.paginate(page: params[:page], per_page: 5) 
    end
+
 
 
    private
