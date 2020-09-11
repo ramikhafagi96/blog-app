@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-  
+  before_action :require_user, except: [:index, :show]
+  before_action :is_authorized, only: [:edit, :update, :destroy]
   def show
   end
 
@@ -48,5 +49,12 @@ class ArticlesController < ApplicationController
 
   def whitelist_params
     params.require(:article).permit(:title, :description)
+  end
+
+  def is_authorized
+    if current_user != @article.user
+      flash[:alert] = "You are not the owner of the article"
+      redirect_to @article
+    end
   end
 end

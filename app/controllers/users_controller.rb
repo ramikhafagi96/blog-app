@@ -1,6 +1,7 @@
 class UsersController <  ApplicationController
     before_action :set_user, only: [:show, :edit, :update]
-
+    before_action :require_user, only: [:edit, :update]
+    before_action :is_authorized, only: [:edit, :update]
    def index
     @users = User.paginate(page: params[:page], per_page: 5)
    end
@@ -11,11 +12,11 @@ class UsersController <  ApplicationController
    def create
     @user = User.new(whitelist_params)
     if @user.save
-        session[:user_id] = @user.id
-        flash[:notice] = "Welcome To Blog Hub #{@user.username}"
-        redirect_to articles_path
+      session[:user_id] = @user.id
+      flash[:notice] = "Welcome To Blog Hub #{@user.username}"
+      redirect_to articles_path
     else
-        render 'new'
+      render 'new'
     end
    end
 
@@ -24,10 +25,10 @@ class UsersController <  ApplicationController
 
    def update
     if @user.update(whitelist_params)
-        flash[:notice] = "Your Account Information Were Successfully Updated"
-        redirect_to @user #user_path(@user)
+      flash[:notice] = "Your Account Information Were Successfully Updated"
+      redirect_to @user #user_path(@user)
     else
-        render 'edit'
+      render 'edit'
     end
    end
 
@@ -44,5 +45,12 @@ class UsersController <  ApplicationController
 
    def set_user
     @user = User.find(params[:id])
+   end
+
+   def is_authorized
+    if current_user != @user
+      flash[:alert] = "You are not the owner of the profile"
+      redirect_to @user
+    end
    end
 end
