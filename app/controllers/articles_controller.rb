@@ -52,7 +52,7 @@ class ArticlesController < ApplicationController
   end
 
   def is_authorized
-    if current_user != @article.user
+    if current_user != @article.user && !current_user.admin?
       flash[:alert] = "You are not the owner of the article"
       redirect_to @article
     end

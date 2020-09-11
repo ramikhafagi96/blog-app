@@ -1,7 +1,7 @@
 class UsersController <  ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :require_user, only: [:edit, :update]
-    before_action :is_authorized, only: [:edit, :update, :destory]
+    before_action :is_authorized, only: [:edit, :update, :destroy]
 
    def index
     @users = User.paginate(page: params[:page], per_page: 5)
@@ -24,7 +24,7 @@ class UsersController <  ApplicationController
 
    def destroy
      @user.destroy
-     session[:user_id] = nil
+     session[:user_id] = nil if current_user == @user
      flash[:notice] = "Account and all associated articles are deleted"
      redirect_to articles_path
    end
@@ -58,7 +58,7 @@ class UsersController <  ApplicationController
    end
 
    def is_authorized
-    if current_user != @user
+    if current_user != @user && !current_user.admin?
       flash[:alert] = "You are not the owner of the profile"
       redirect_to @user
     end
