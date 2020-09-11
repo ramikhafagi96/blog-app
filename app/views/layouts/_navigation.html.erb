@@ -12,7 +12,9 @@
                     Articles
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <% if logged_in? %>
                     <%= link_to 'Create New Article', new_article_path, class: "dropdown-item" %>
+                    <% end %>
                     <%= link_to 'View Articles', articles_path, class: "dropdown-item" %>
                 </div>
             </li>
@@ -20,9 +22,16 @@
                 <%= link_to 'Bloggers', users_path, class: "nav-link" %>
             </li>
             <% if logged_in? %>
-                <li clas="nav-item">
-                <%= link_to current_user.username, user_path(current_user), class: "nav-link" %>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%= current_user.username%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <%= link_to 'Profile', user_path(current_user), class: "dropdown-item" %>
+                        <%= link_to 'Edit Profile', edit_user_path(current_user), class: "dropdown-item" %>
+                </div>
+            </li>
                 <li clas="nav-item">
                 <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
                 </li>
