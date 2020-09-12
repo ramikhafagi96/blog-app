@@ -20,5 +20,15 @@ class CategoryTest < ActiveSupport::TestCase
     @category2 = Category.new(name: "Sports")
     assert_not @category2.valid?
   end
+
+  test "name should not be too long" do
+    @category.name = "a" * 26
+    assert_not @category.valid?
+  end
+
+  test "name should not be too short" do
+    @category.name = "a" * 2
+    assert_not @category.valid?
+  end
   
 end
