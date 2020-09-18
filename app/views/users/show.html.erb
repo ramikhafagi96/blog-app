@@ -1,3 +1,4 @@
+<div class="container">
 <h1 class="text-center mt-4"><%= @user.username %> Profile</h1>
 <div class="flickr_pagination">
     <%= will_paginate @articles, :container => false %>
@@ -9,8 +10,12 @@
 </div>
 
 <h1 class="text-center mt-4">Articles</h1>
-
-<%= render 'articles/article' %>
+    <div class="row">
+        <div class="col-12">
+            <%= render 'articles/article' %>
+        </div>
+    </div>
 <div class="flickr_pagination mb-4">
     <%= will_paginate @articles, :container => false %>
+</div>
 </div>
