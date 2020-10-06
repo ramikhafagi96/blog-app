@@ -51,4 +51,4 @@ $ rails server
 
 ## Contact
 Email: rami.developer96@gmail.com <br/>
-Linkedin: <a href="https://linkedin/in/ramikhafagi96">ramikhafagi96</a>
+Linkedin: <a href="https://linkedin.com/in/ramikhafagi96">ramikhafagi96</a>
